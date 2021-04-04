@@ -1,0 +1,17 @@
+{
+  "data": {
+    "request_id": "751cb7ed-27ad-4bd5-b3e2-1bd3ba0f8458",
+    "name": "Aasimar",
+    "category": "Shoes",
+    "store_id": 1,
+    "evnt_time": "2021-03-23T19:41:56.463421",
+    "evnt_type": "inventory-event",
+    "new_order": true,
+    "sales": 56.33,
+    "sku": 44324,
+    "gift_wrap": false,
+    "qty": 14,
+    "priority_shipping": true,
+    "contact_me": "github.com/miztiik"
+  }
+}
