@@ -23,7 +23,7 @@ In this application, they will have their physical stores, send _sales_ and _inv
 }
 ```
 
-Not all of this information need to be accessible to all consumers. For example, the consumers from the inventory department does not need to know the product price and discount being offered. Miztiik Unicorn is looking for a mechanism to filter out the sensitive information based on the consumer.
+Not all of this information need to be accessible to all consumers. For example, the consumers from the inventory department does not need to know the product price and discount being offered. They do not want to change the original events and create multiple copies of the same event. Miztiik Unicorn is looking for a mechanism to filter out the sensitive information based on the consumer without modifying the original event.
 
 Can you help them achieve the same?
 
@@ -31,7 +31,7 @@ Can you help them achieve the same?
 
 With the recently launched AWS feature - S3 Object Lambda, you can add your own code to S3 GET requests to modify and process data as it is returned to an application. S3 Object Lambda relies on AWS Lambda functions to automatically process the output of each request.
 
-![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_00.png)
+![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_000.png)
 
 In this demo, we will create a the architecture like the one shown above. We will create a producer of `store_events` using lambda and persist them in our store events bucket. To provide secure access the data by different consumers, we will create S3 Access Point<sup>[4],</sup> <sup>[5]</sup>. In our case, let us assume there will be a inventory customer running as a lambda function. We will call our access point `lambda-consumer`. This access point will be configured to execute a lambda function for all `GET` requests through its ARN. This lambda will redact the `discount` and `price` fields from the events and return to the user. We will use the GUI/CLI to simulate the consumer. A sample response is shown below.
 
@@ -185,8 +185,11 @@ In this demo, we will create a the architecture like the one shown above. We wil
       - **S3 Console** >> **Object Lambda Access Points** >> **`miztiik-data-shield`** >> Navigate to an object, an example shown below.
         ![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_02.png)
 
-      You should be able to download a JSON that has the `discount` and `price` fields removed.
-      ![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_03.png)
+        You should be able to download a JSON that has the `discount` and `price` fields removed.
+
+        ![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_03.png)
+
+      If you go back to the bucket and access the item directly from S3 bucket console (_not from any of the access point_), you will find that the original item is unmodified and still has the `discount` and `price` fields.
 
 1. ## 📒 Conclusion
 
