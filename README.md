@@ -31,7 +31,7 @@ Can you help them achieve the same?
 
 With the recently launched AWS feature - S3 Object Lambda, you can add your own code to S3 GET requests to modify and process data as it is returned to an application. S3 Object Lambda relies on AWS Lambda functions to automatically process the output of each request.
 
-![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_000.png)
+![Miztiik Automation: S3 Object Lambda - Process S3 Retrieved Data Inflight](images/miztiik_automation_s3_object_lambda_architecture_0.png)
 
 In this demo, we will create a the architecture like the one shown above. We will create a producer of `store_events` using lambda and persist them in our store events bucket. To provide secure access the data by different consumers, we will create S3 Access Point<sup>[4],</sup> <sup>[5]</sup>. In our case, let us assume there will be a inventory customer running as a lambda function. We will call our access point `lambda-consumer`. This access point will be configured to execute a lambda function for all `GET` requests through its ARN. This lambda will redact the `discount` and `price` fields from the events and return to the user. We will use the GUI/CLI to simulate the consumer. A sample response is shown below.
 
