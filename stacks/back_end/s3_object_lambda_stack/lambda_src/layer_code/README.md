@@ -9,11 +9,11 @@ Simple script to package boto3 and requests for lambda function
 
 S3_BUCKET='mystique-automation-layer'
 
-# Prepare AS Boto3 Layer
-mkdir -p /tmp/layer-boto3
-cd /tmp/layer-boto3
+# Prepare AS kafka Layer
+mkdir -p /tmp/layer-kafka
+cd /tmp/layer-kafka
 rm -rf *
-pip install boto3 -t ./python
+pip install kafka -t ./python
 # Slim the package
 cd ./python
 find . -type d -name "tests" -exec rm -rfv {} +
@@ -24,7 +24,7 @@ rm -r *.whl *.dist-info __pycache__
 ## Begin packaging
 printf("## Begin packaging ##\n")
 cd ..
-zip -r9 -q "boto3_python_37.zip" ./python
+zip -r9 -q "kafka_python3.zip" ./python
 
 
 
